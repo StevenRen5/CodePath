@@ -1,4 +1,4 @@
-# 2/26
+# 2/26 Unit 1
 # Instructor Demo
 
 # create structure of function including input & output
@@ -154,6 +154,3 @@ def linear_search(lst, target):
 lst_12 = [1,4,5,2,8]
 print(linear_search(lst_12,5))
 
-
-
-# print(Q#, )
