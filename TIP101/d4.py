@@ -69,7 +69,7 @@ def get_highest_priority_task(tasks):
     highest_task = None
 
     for task in tasks:
-        if highest_task == None:
+        if highest_task is None:
             highest_task = task
         elif tasks[task] > tasks[highest_task]:
             highest_task = task
@@ -77,6 +77,79 @@ def get_highest_priority_task(tasks):
     return highest_task
 
 # Q5
+def find_majority_element(elements):
+    d = {}
+    for ele in elements:
+        if ele in d:
+            d[ele] += 1
+        else:
+            d[ele] = 1
+    
+    for num in d:
+        if d[num] > len(elements)/2:
+            return num
+    return None
+
+elements = [2, 2, 1, 1, 1, 2, 2]
+print(find_majority_element(elements))
 
 
-# Q6
+'''
+inputs: list of integers num, positive num k
+outputs: true if list contains any duplicate elements within k indices of each other
+'''
+
+
+
+
+# Q6 (incomplete)
+def has_duplicates(nums, k):
+    d = {}
+    if k >= len(nums):
+        for n in nums:
+            if n in d:
+                return True
+            else:
+                d[n] = n # doesn't matter the value
+    
+    # dictionary d would store d[number] = previous index 
+    for i in range(len(nums)):
+        if nums[i] in d:
+            # [6,0,6] -> encountered 6 already
+            if i - d[nums[i]] <= k:
+                return True
+            else:
+                d[nums[i]] = i
+        else:
+            d[nums[i]] = i
+    return False
+	
+
+nums = [5, 6, 8, 2, 6, 4, 9]
+check1 = has_duplicates(nums, 2)
+print(check1) # False
+check2 = has_duplicates(nums, 5)
+print(check2) # True
+check3 = has_duplicates(nums, 3)
+print(check3) # True
+
+# Q7
+
+def divide_list(nums):
+    d = {}
+    for num in nums:
+        if num in d:
+            d[num] += 1
+        else:
+            d[num] = 1
+    
+    for key in d:
+        if d[key] % 2 != 0:
+            return False
+    return True
+
+nums = [3,2,3,2,2,2]
+# print(divide_list(nums))
+nums2 = [1,2,3,4]
+# print(divide_list(nums2))
+
