@@ -109,21 +109,25 @@ my_str = "live"
 # version 1 #6
 def min_distance(words, word1, word2):
 
+    distance = 0
     for i in range(len(words)):
         for j in range(len(words)):
             if words[i] == word1 and words[j] == word2:
-                distance = abs(j-i)
+                if distance == 0:
+                    distance = abs(j-i)
+                elif abs(j-1) < distance:
+                    distance = abs(j-i)
     return distance 
     
 words = ["the", "quick", "brown", "fox", "jumped", "the"]
 dist1 = min_distance(words, "quick", "jumped")
 dist2 = min_distance(words, "the", "jumped")
-# print(dist1) # 3
-# print(dist2) # 1
+print(dist1) # 3
+print(dist2) # 1
 
 words2 = ["code", "path", "code", "contribute",  "practice"]
 dist3 = min_distance(words2, "code", "practice")
-# print(dist3) # 2
+print(dist3) # 2
 
 
 # Version #4: Reverse Sentence
@@ -140,7 +144,7 @@ def reverse_sentence(sentence):
     return reverse_sentence
 
 sentence = "I solemnly swear I am up to no good"
-print(reverse_sentence(sentence)) # "good no to up am I swear solemnly I"
+# print(reverse_sentence(sentence)) # "good no to up am I swear solemnly I"
 
 # Version 3, #1: Choose Your Pokemon
 
