@@ -100,7 +100,7 @@ def reverse_only_letters(s):
 
 s = "a-bC-dEf-ghIj"
 reversed_s = reverse_only_letters(s)
-print(reversed_s) #j-Ih-gfE-dCba
+# print(reversed_s) #j-Ih-gfE-dCba
 
 # V1, Q4
 """
@@ -161,16 +161,87 @@ If Teemo hits Ashe while she is still poisoned, the poison's duration starts ove
 
 Total time in poisioned condition is 5
 
+# Understand:
+time_series is a increasing list
+duration >= 1
+
+
 Plan:
-
-
+Create a counter for the total time in poisoned state
+Loop through time_series 
+    Compare current time to next time and subtract by duration. If it's > 0, update counter by computation
+Return counter
 """
 
 def find_poisoned_duration(time_series, duration):
+    poision_total = 0
 
+    # time_series = [1,4,9], dur = 3
 
+    for i in range(len(time_series)-1):
+        poision_counter = 0
+        initial = time_series[i]
+        while initial < time_series[i+1] - 1:
+            if poision_counter < duration: 
+                poision_counter += 1 
+            initial += 1
+        poision_total += poision_counter
+    
+    poision_total += duration # accounts for the last attack-poisoned duration
+    return poision_total
 
-
-time_series = [1,4,9]
+# time_series = [1,4,9]
+time_series = [1,4,6]
 damage = find_poisoned_duration(time_series, 3)
-print(damage) #8
+# print(damage) #8
+
+"""
+Attack 1
+P 2
+P 3
+A 4
+P 5
+P 6
+P 7
+8 normal
+A 9
+P 10
+P 11
+P 12
+"""
+
+# V1 Q6
+
+"""
+Plan:
+Create a sum_counter
+Create a dictionary to track whether we've seen a duplicate number in lst 1 by using the boolean value
+Go through dictionary by key and if the value is false (not seen), if it appears in lst 2, increment value to sum_counter
+"""
+
+
+def sum_of_unique_elements(lst1, lst2):
+    d = {} 
+    sum = 0
+
+    for num in lst1:
+        if num not in d:
+            d[num] = False
+        else:
+            d[num] = True
+    
+    for key in d:
+        if key not in lst2 and d[key] == False:
+            sum += key
+    
+    return sum
+
+lstA = [1, 2 ,3, 4] 
+lstB = [3, 4, 5, 6]
+lstC = [7, 7, 7, 7]
+
+sum1 = sum_of_unique_elements(lstA, lstB)
+print(sum1) # 3
+
+sum2 = sum_of_unique_elements(lstC, lstB)
+print(sum2) # 0
