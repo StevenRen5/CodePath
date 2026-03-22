@@ -38,9 +38,10 @@ def valid_palindrome(s):
             right -= 1
             continue
         else:
-            return class_palindrome(s, left+1, right) or class_palindrome(s, left, right+1)
+            return class_palindrome(s, left+1, right) or class_palindrome(s, left, right-1)
             # we will allow for scooting ONCE.
             # we will perform normal palindrome checking on both segments
+            # NOte: Why not remove something deeper inside? Because if earlier characters already matched, removing deeper characters would not fix the mismatch happening right now.
     return True
         
 # V1 Q1
@@ -62,14 +63,12 @@ def reverse_list(lst):
         left += 1
         right -= 1
 
-input = [1,2,3,4,5]
-reverse_list(input)
-print(input)
+arr = [1,2,3,4,5]
+reverse_list(arr)
+print(arr)
 #               0   1 2  3  4
 # Example Input: [1, 2, 3, 4, 5]
 # Example Output: [5, 4, 3, 2, 1]
-
-# V1 Q3
 
 # V1 Q4
 def sort_array_by_parity(nums):
@@ -84,6 +83,17 @@ def sort_array_by_parity(nums):
         right -= 1
     return nums
 
+# example inputs:
+nums = [3,1,2,4]
+nums2 = [0]
+# print(sort_array_by_parity(nums))
+# print(sort_array_by_parity(nums2))
+# example outputs:
+# [2,4,3,1]
+# Additional acceptable outputs are [4,2,3,1], [2,4,1,3], and [4,2,1,3]
+[1,2,3,4]
+[4,2,3,1]
+
 # V1 Q5
 def is_palindrome(word):
     left = 0
@@ -91,6 +101,8 @@ def is_palindrome(word):
     while left < right:
         if word[left] != word[right]:
             return False
+        left += 1
+        right -= 1
     return True
 
 def first_palindrome(words):
@@ -99,7 +111,37 @@ def first_palindrome(words):
             return word
     return ""
 
+words = ["abc","car","ada","racecar","cool"]
+# print(first_palindrome(words))
 
+words2 = ["abc","racecar","cool"]
+# print(first_palindrome(words2))
+
+words3 = ["abc", "def", "ghi"]
+# print(first_palindrome(words3))
+
+# V1 Q6
+def remove_duplicates(nums):
+    left = 0 # index of the last unique element
+    
+    # right will mvoe through every elment and check whether it is new or dupe
+    for right in range(1, len(nums)):
+        if nums[left] != nums[right]:
+            nums[left + 1] = nums[right]
+            left += 1
+        
+    return left + 1
+
+
+nums = [1,1,2,3,4,4,4,5]
+print(nums)
+print(remove_duplicates(nums))
+print(nums) # same list
+
+
+
+
+    
 
 
 
