@@ -94,12 +94,6 @@ def count_element(head, val):
 # print(count_element(head, 1))
 
 # V1 Q3
-
-class Node:
-    def __init__(self, value=None, next=None):
-        self.value = value
-        self.next = next
-        
         
 # Helper function to print the linked list
 def print_list(node):
@@ -108,7 +102,6 @@ def print_list(node):
         print(current.value, end=" -> " if current.next else "")
         current = current.next
     print()
-
 
 # I have a bug! 
 def remove_tail(head):
@@ -119,8 +112,7 @@ def remove_tail(head):
 		
 	# Start from the head and find the second-to-last node
     current = head
-    # prev = head
-    while current.next.next: 
+    while current.next.next: # checks to see there's two more nodes after current. If not the curr is 2nd to last node.
         current = current.next
 
     current.next = None # Remove the last node by setting second-to-last node to None
@@ -131,36 +123,36 @@ def remove_tail(head):
 # head = remove_tail(head)
 # print_list(head)
 
-# V1 Q4
+# V1 Q5
 # fast-slow pointers method
 # Push elements from s to n/2 elements to stack. 
 # Pop element from S to the end while comparing. If different, return false.
 def is_palindrome(head):
     stack = []
-    slow = fast = head
+    slow = head
+    fast = head
     
     if head == None:
         return None
     
-    # while loop to check length of list and if statement 
-    
-    while fast and fast.next:
+    while (fast is not None and fast.next is not None):
         stack.append(slow.value)
-        
-        fast = fast.next.next
-        slow = slow.next
-            
-    if fast:
+        fast = fast.next.next 
         slow = slow.next
 
-    while slow:
+    if fast != None:
+        slow = slow.next
+    
+    while slow != None:
         if slow.value != stack.pop():
             return False
         slow = slow.next
     return True
-    
+
 # head = Node(1, Node(2, Node (1)))
+head = Node(1, Node(2, Node (2, Node(1))))
 # print(is_palindrome(head))
+
 # Stack = [1,2,2]
 # 1 -> 2 -> 2 -> 3 -> 2 -> 2 -> 1
 #                S              
@@ -171,12 +163,30 @@ def is_palindrome(head):
 #                F  
 
 
-#V1 Q5
+#V1 Q6
 # two pointers - curr, prev
 # h
 # 1 -> 2 -> 3 <- 4
 
 def reverse(head):
 
-# head = Node(1, Node(2, Node(3, Node(4))))
+    if head == None:
+        return None
+    if head.next == None:
+        return head
+    
+    current = head.next # 2nd node
+    prev = head # 1st node 
+    prev.next = None # since this 1st node will be the last node of the reversed list, set it to none
+
+    while current:
+        temp = current
+        current = current.next
+        temp.next = prev
+        prev = temp
+
+    return prev
+    
+head = Node(1, Node(2, Node(3, Node(4))))
+# head = Node(1, Node(2))
 print_list(reverse(head))
