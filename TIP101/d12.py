@@ -94,48 +94,77 @@ def is_power_of_two(n):
 # print(is_power_of_two(1)) # true (actually false)
 
 # V1 Q5
-
-"""
-
-
-"""
-
 def binary_search(lst, target):
 	# Initialize a left pointer to the 0th index in the list
+    left = 0 
+    right = len(lst) - 1
 	# Initialize a right pointer to the last index in the list
-    left_pointer = 0
-    right_pointer = len(lst) - 1 
 	
 	# While left pointer is less than right pointer:
+    while left <= right:
 		# Find the middle index of the array
-    while left_pointer < right_pointer:
-
-        if right_pointer - left_pointer 
-        left_pointer += 1
-        right_pointer -= 1
-    
-        middle_index = left_pointer - 1
-        if target == lst[middle_index]:
-            return middle_index
-        
-        elif lst[middle_index] < target:
-            left_pointer = middle_index
-            right_pointer = len(lst) - 1
-
-        else:
-            left_pointer = 0
-            right_pointer = middle_index
+        # // is the floor division operator
+        middle = (left+right) // 2
 
 		# If the value at the middle index is the target value:
-			# Return the middle index
-        
-		# Else if the value at the middle index is less than our target value:
-			# Update pointer(s) to only search right half of the list in next loop iteration
-		# Else
-			# Update pointer(s) to only search left half of the list in next loop iteration
+        if lst[middle] == target:
+                return middle 
+        # Else if the value at the middle index is less than our target value:
+        elif lst[middle] < target:
+            # Update pointer(s) to only search right half of the list in next loop iteration
+            left = middle + 1
+        else:
+            # Update pointer(s) to only search left half of the list in next loop iteration
+            right = middle - 1 
 	
 	# If we search whole list and haven't found target value, return -1
+    return -1
 
 #.    0   1 2. 3.  4  5. 6   7
-lst = [1, 3, 5, 7, 9, 11, 13, 15]
-lst = [1, 3, 5, 7, 9, 11]
+lst = [1, 3, 5, 7, 9, 11, 13, 15] 
+#      0. 1. 2. 3. 4. 5 
+# lst = [1, 3, 5, 7, 9, 11] 
+# print(binary_search(lst, 11))
+
+# V1 Q6
+def find_last(lst, target):
+    left = 0 
+    right = len(lst) - 1
+    last_occurrence = -1
+    while left <= right:
+        middle = (left+right) // 2
+
+        if lst[middle] == target:
+            last_occurrence = middle
+            left = middle + 1
+        elif lst[middle] < target:
+            left = middle + 1
+        else:
+            right = middle - 1 
+    return last_occurrence
+
+lst = [1, 3, 5, 7, 9, 11, 11, 13, 15] 
+print(find_last(lst, 11))
+
+# V1 Q7
+def find_floor(lst, x):
+    left = 0 
+    right = len(lst) - 1
+    floor_x = -1
+    
+    while left <= right:
+        middle = (left+right) // 2
+        
+        if lst[middle] <= x:
+            floor_x = middle
+            left = middle + 1
+        elif lst[middle] < x:
+            left = middle + 1
+        else:
+            right = middle - 1 
+    return floor_x
+
+lst = [1, 2, 8, 10, 11, 12, 19]
+# print(find_floor(lst, 18))
+
+
