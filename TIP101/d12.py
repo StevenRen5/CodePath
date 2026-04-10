@@ -120,6 +120,19 @@ def binary_search(lst, target):
 	# If we search whole list and haven't found target value, return -1
     return -1
 
+    left = 0 
+    right = len(lst) - 1
+    while left <= right:
+        middle = (left+right) // 2
+
+        if lst[middle] == target:
+                return middle 
+        elif lst[middle] < target:
+            left = middle + 1
+        else:
+            right = middle - 1 
+    return -1
+
 #.    0   1 2. 3.  4  5. 6   7
 lst = [1, 3, 5, 7, 9, 11, 13, 15] 
 #      0. 1. 2. 3. 4. 5 
