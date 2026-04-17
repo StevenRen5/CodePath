@@ -122,5 +122,3 @@ def inorder_traversal(root):
 
     inorder_traversal(root.left)
 
-
-    
