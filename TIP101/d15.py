@@ -18,9 +18,9 @@ def first_uniq_char(s: str) -> int:
 	return -1
 
 
-print(f'Test 1 ("leetcode"): {first_uniq_char("leetcode")}') # Expected: 0
-print(f'Test 2 ("loveleetcode"): {first_uniq_char("loveleetcode")}') # Expected: 2
-print(f'Test 3 ("aabb"): {first_uniq_char("aabb")}') # Expected: -1
+# print(f'Test 1 ("leetcode"): {first_uniq_char("leetcode")}') # Expected: 0
+# print(f'Test 2 ("loveleetcode"): {first_uniq_char("loveleetcode")}') # Expected: 2
+# print(f'Test 3 ("aabb"): {first_uniq_char("aabb")}') # Expected: -1
 
 # class mock interview problem 2
 
@@ -115,12 +115,12 @@ def is_univalued(root):
 	val = root.val
 	return helper(root, val)
 	
-root = TreeNode(1)
-root.left = TreeNode(1)
-root.right = TreeNode(1)
-root.left.left = TreeNode(1)
-root.left.right = TreeNode(1)
-root.right.right = TreeNode(1)
+# root = TreeNode(1)
+# root.left = TreeNode(1)
+# root.right = TreeNode(1)
+# root.left.left = TreeNode(1)
+# root.left.right = TreeNode(1)
+# root.right.right = TreeNode(1)
 
 # root = TreeNode(1)
 # root.left = TreeNode(1)
@@ -128,5 +128,77 @@ root.right.right = TreeNode(1)
 # root.left.left = TreeNode(1)
 # root.left.right = TreeNode(2)
 # root.right.right = TreeNode(1)
-print(is_univalued(root))
+# print(is_univalued(root))
 
+# V1 Q2
+"""
+Leaves in the bottom level are as far left as possible
+"""
+
+def height(root):
+	if root == None:
+		return 0
+	return 1 + max(height(root.left), height(root.right))
+
+# root = TreeNode(1)
+# root.left = TreeNode(1)
+# root.right = TreeNode(1)
+# root.left.left = TreeNode(1)
+# root.left.right = TreeNode(2)
+# root.right.right = TreeNode(1)
+# print(height(root))
+
+# V1 !3
+class TreeNode():
+     def __init__(self, key, value=0, left=None, right=None):
+        self.key = key
+        self.value = value
+        self.left = left
+        self.right = right
+
+# from cheat sheet:
+def search_bst(node, key):
+    # Base case: node is None or we find the key
+    if node is None or node.key == key:
+        return node
+
+    # If the key to be found is less than the current node's key, search in the left subtree
+    if key < node.key:
+        return search_bst(node.left, key)
+
+    # If the key to be found is greater than the current node's key, search in the right subtree
+    return search_bst(node.right, key)
+
+"""
+Helper function.
+Helper function will take the key and value to identify where to place the new node.
+"""
+
+
+def insert(root, key, value):
+	if root is None:
+		return TreeNode(key, value)
+	
+	if root.key == key:
+		root.value = value
+		return root
+
+	if root.key < key:
+		# we don't return the helper function, but assign the root.left or right to the called function so that when we return the node in the base case, the tree is connected.
+		root.right = insert(root.right, key, value)
+	
+	if root.key > key:
+		root.left = insert(root.left, key, value)
+
+	return root
+
+
+root = TreeNode(4)
+root.left = TreeNode(3)
+root.right = TreeNode(5)
+insert(root, 6, "hi")
+# print(root.right.right.value)
+
+
+
+	
