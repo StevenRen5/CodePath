@@ -11,7 +11,7 @@ I’m using this space to:
 ## Courses I've Taken So Far:
 
 - Intro Technical Interview Prep (TIP 101)
-- ntermediate Technical Interview Prep (TIP 102)
+- Intermediate Technical Interview Prep (TIP 102)
 - Foundations of AI Engineering (AI110)
 
 
