@@ -8,4 +8,11 @@ I’m using this space to:
 - Reinforce and review key programming concepts
 - Publicly track my progress over time
 
+## Courses I've Taken So Far:
+
+- Intro Technical Interview Prep (TIP 101)
+- ntermediate Technical Interview Prep (TIP 102)
+- Foundations of AI Engineering (AI110)
+
+
 Feel free to explore my projects and notes to see my journey in tech development.
