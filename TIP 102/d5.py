@@ -35,13 +35,15 @@ PLAN:
 def is_valid_post_format(posts):
   stack = []
   d = {")": "(", "]":"[", "}":"{"}
-  for char in posts:
-    if char in "{([":
-      stack.append(char)
-    elif char in d:
-      if d[char] != stack[-1]:
-        return False
-      stack.pop()
+  for char in d:
+      if char in "({[":
+          stack.append(char)
+      else:
+          if not stack:
+              return False
+          if d[char] != stack[-1]:
+              return False
+          stack.pop()
   return len(stack) == 0
 
 # print(is_valid_post_format("()"))
