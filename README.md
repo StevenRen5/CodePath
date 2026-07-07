@@ -12,7 +12,6 @@ I’m using this space to:
 
 - Intro Technical Interview Prep (TIP 101)
 - Intermediate Technical Interview Prep (TIP 102)
-- Foundations of AI Engineering (AI110)
 
 
 Feel free to explore my projects and notes to see my journey in tech development.
