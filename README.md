@@ -8,6 +8,9 @@ I’m using this space to:
 - Reinforce and review key programming concepts
 - Publicly track my progress over time
 
+## Courses I'm Currently Taking:
+- Advanced Technical Interview Prep (TIP 103)
+
 ## Courses I've Taken So Far:
 
 - Intro Technical Interview Prep (TIP 101)
