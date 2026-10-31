@@ -1,4 +1,4 @@
-# 10/15/26 Intro to Graphs & Traversals (BFS/DFS) 
+# 10/13/26 Intro to Graphs & Traversals (BFS/DFS) 
 
 # Graphs
 
@@ -55,6 +55,45 @@ def DFS(graph, start_node):
         stack.append(neighbor)
   return visited_nodes
 
+""" DFS implementation (recursion)
+- Main function
+    def dfs(graph, start_node):
+        - Create empty list to store nodes that have been visited
+        - Pass list of visited nodes and `start_node` into `dfs_helper`
+        - Return list of visited nodes
+
+- Helper function
+    def dfs_helper(graph, start_node, visited):
+        - If `start_node` is not in list of visited nodes
+            - Append `start_node` to list of visited nodes
+            - Loop through `start_node`'s neighbors
+                - Call dfs_helper passing in list of visited nodes and the neighbor
+                  as the new start node
+"""
+
+def DFS_recursion(graph, start_node):
+  visited_nodes = []
+
+  def dfs_helper(graph, start_node):
+    if start_node not in visited_nodes:
+      visited_nodes.append(start_node)
+      for neighbor in graph[start_node]:
+        dfs_helper(graph, neighbor)
+
+  dfs_helper(graph, start_node)
+
+  return visited_nodes
+
+graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "E"],
+    "D": ["B"],
+    "E": ["B", "C"]
+}
+
+print(DFS(graph, "A"))
+
 """
 Instructo demo:
 
@@ -95,7 +134,7 @@ def build_graph(edges):
     return graph
 
 # 1. Build the graph by passing in list of edges
-social_graph = build_graph(friendships)
+# social_graph = build_graph(friendships)
 
 # 2. Test: Find Alice's friends instantly. O(1) lookup.
 # print(f"Alice's friends: {social_graph['Alice']}")
@@ -242,17 +281,119 @@ def get_all_destinations_(flights, start):
 # print(get_all_destinations_(flights, "Beijing"))
 # print(get_all_destinations(flights, "Helsinki"))
 
+"""
+Set1, #5
+UNDERSTAND:
+> Input: list of edges 
+> Output: arr
+> Edge cases:
+MATCH:
+dictionary
+PLAN:
+create a dictionary
+go through each element and add the departure and arrival to the dictionary
+add the departure and arrival airports totheir respective sets
+find the start_airport which is in the departure and not arrival airport
+iterate through the dictionary map using the starting airport and return res
+REVIEW:
+EVALUATE: 
+O(E) for space, run time
+"""
 
+def find_itinerary(boarding_passes):
+  flights_map = {}
+  departure_airport = set()
+  arrival_airport = set()
 
+  for boarding_pass in boarding_passes:
+    flights_map[boarding_pass[0]] = boarding_pass[1]
+    departure_airport.add(boarding_pass[0])
+    arrival_airport.add(boarding_pass[1])
 
-    
+  start_airport = ""
+  for dep in departure_airport:
+    if dep not in arrival_airport:
+      start_airport = dep
+      break
+  res = [start_airport]
+  while start_airport in flights_map:
+    arrival = flights_map[start_airport]
+    res.append(arrival)
+    start_airport = arrival
+  return res
 
+boarding_passes_1 = [
+                    ("JFK", "ATL"),
+                    ("SFO", "JFK"),
+                    ("ATL", "ORD"),
+                    ("LAX", "SFO")]
+
+boarding_passes_2 = [
+                    ("LAX", "DXB"),
+                    ("DFW", "JFK"),
+                    ("LHR", "DFW"),
+                    ("JFK", "LAX")]
+
+# print(find_itinerary(boarding_passes_1))
+# print(find_itinerary(boarding_passes_2))
+
+"""
+Set1, #7
+UNDERSTAND:
+> Input: adjacency matrix
+> Output: integer - minimim flights from i to j
+> Edge cases:
+MATCH:
+BFS - finds the minimum number of edges
+PLAN:
+BFS On adjacency matrix algorithm
+REVIEW:
+EVALUATE: 
+"""
+def counting_flights(matrix, i, j):
+  n = len(matrix)
+
+  visited = [False] * n
+  visited_edges = {i: 0}
+  queue = deque([i])
+  result = [i]
+
+  visited[i] = True
+  while queue:
+      node = queue.popleft()
+      # Check every possible neighbor
+      for neighbor in range(n):
+          # Is there an edge AND is it unvisited?
+          if matrix[node][neighbor] == 1 and not visited[neighbor]:
+            visited[neighbor] = True
+            visited_edges[neighbor] = visited_edges[node] + 1
+            if neighbor == j:
+              return visited_edges[neighbor]
+            queue.append(neighbor)
+            result.append(neighbor)
+  return -1
+
+# Example usage
+flights = [
+    [0, 1, 1, 0, 0], # Airport 0
+    [0, 0, 1, 0, 0], # Airport 1
+    [0, 0, 0, 1, 0], # Airport 2
+    [0, 0, 0, 0, 1], # Airport 3
+    [0, 0, 0, 0, 0]  # Airport 4
+]
+
+print(counting_flights(flights, 0, 2))  
+print(counting_flights(flights, 0, 4))
+print(counting_flights(flights, 4, 0))
+"""
+1 
+Example 1 Explanation: Flight path: 0 -> 2
+3
+Example 2 Explanation: Flight path 0 -> 2 -> 3 -> 4
+-1
+Explanation: Cannot fly from Airport 4 to Airport 0
+"""
    
-   
-
-
-
-
 
 
 
