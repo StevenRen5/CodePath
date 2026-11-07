@@ -147,38 +147,95 @@ MATCH:
 PLAN:
 
 try every number that's 0 < x < n and n % x == 0
-go from 2 to n+1
-  check if ang can win
-
-Choose any x such that 0 < x < n and n % x == 0
-  |
-  player_nums = set()
-  for i in range(1,10):
-    if n % i == 0:
-      player_nums.append(i)
+go from i in range 2 to n+1
+  nested loop from j in range 1 to i exclusive
 
 
 REVIEW:
 EVALUATE: 
 """
 def aang_wins(n):
-  dp = [False] * (n+1)
-  for i in range(2,n+1): # dp[i] working up 
-    for j in range(1, i): # j - possible value that Ang can subtract from i
-      if i % j == 0: #checking if j is a valid move for Ang
-        if not dp[i-j]: #checking if Ang makes this move, he will win or lose
-          dp[i] = True
-          break
+  dp = [False] * (n+1) # dp[i] stores whether the player whose turn it is can win when the current number is i, assuming both players play optimally. When calculating dp[i], we think generically who's turn it is. It represents whoever is about to play at that number. In this problem for an arbitrary n, Aang always go first. Ex. dp[2] = True (when calculated) --> Ang can win if he starts at 2.
+  # dp[1] = False b/c no positive int such that 0 < x < 1. Base case.
+  for i in range(2,n+1): # dp[i] working up. i is thr current battlefield number.
+    for j in range(1, i): # j - possible value that we can subtract. Rule is 0 < j < i (so 1 to i exclusive)
+      if i % j == 0: # checking if j is a valid move
+        # If I (ang) can make a valid move that puts my opponent in a losing position, then my current position is a winning position.
+        if not dp[i-j]: # i-j the number I'm leaving for my oponent. dp[i-j] is can my oponent win from i-j? not dp[i - j] → My opponent cannot win from that number
+          dp[i] = True # Therefore I can win
+          break # The break is there because we only need to find one move that guarantees a win; If there's a move that guarantees a win, the player will choose it. We break because we've found a move that guarantees victory. There's no need to check the remaining moves since dp already calculated them.
   return dp[n]
 
 # print(aang_wins(2))
 # print(aang_wins(3))
 
 """
+n = 2 
+dp[2] = True means the player starting at 2 can win.
+If Aang starts at 3 and subtracts 1, Zuko gets 2.
+Since Zuko can win from 2, Aang loses (assuming optimal play).
+
 True
 Example 1 Explanation: Aang reduces the strength by 1, and Zuko has no more moves.
 
 False
 Example 2 Explanation: Aang reduces the strength by 1, then Zuko does the same, leaving 
 Aang with no moves.
+"""
+
+"""
+Set1, #3
+UNDERSTAND:
+> Input: ingredients - list of int
+> Output: int 
+> Edge cases:
+MATCH:
+DP
+PLAN:
+
+dp solution:
+
+base case = solutions to the smallest/easiest subproblems
+
+subproblem = what we're solving at a specific index
+- max_dp[i] = the largest product of a consecutive subarray that ends exactly at index i.
+- min_dp[i] = the smallest product of a consecutive subarray that ends exactly at index i.
+- At each index, we can either start a new subarray at i or extend a previous subarray ending at i-1. Sometimes starting a new subarray at index i is better since it's the best option.
+-We track both the maximum and minimum products because multiplying a negative product by another negative number can turn the minimum into the new maximum (and vice versa)
+recurrence relation = how the sol to larger subproblem is constructed from smaller subproblems.
+- 3 options because we don't know if starting a new subarray, extending the previous max, or previous min can give us the best product.
+- Start a new subarray: x
+- Extend the previous maximum: max_dp[i-1] * x
+- Extend the previous minimum: min_dp[i-1] * x
+final sol: involves the last index / or whole list
+return max(max_dp) and not max_dp[-1] b/c our largest product isn't guranteed to be at the end; max_dp[i] represents the largest product of a consecutive subarray ending exactly at index i, but the overall maximum might end at an earlier index.
+
+EVALUATE: 
+O(n) space, time
+"""
+def strongest_tea(ingredients):
+  min_dp = [0] * len(ingredients)
+  max_dp = [0] * len(ingredients)
+
+  # base case: the only option at i = 0, is the first element itself.
+  min_dp[0] = ingredients[0] # O(n)
+  max_dp[0] = ingredients[0]
+
+  for i in range(1, len(ingredients)): # O(n)
+    x = ingredients[i]
+    min_dp[i] = min(x, min_dp[i-1] * x, max_dp[i-1] * x) #O(1) b/c comparing 3 values constant, independent of len(ingredients)
+    max_dp[i] = max(x, min_dp[i-1] * x, max_dp[i-1] * x)
+
+  return max(max_dp)
+
+
+print(strongest_tea([1, 2, -3, 4]))
+print(strongest_tea([-2, -1]))
+print(strongest_tea([1, 2, -3, 4,-5,-1])) 
+"""
+4
+Example 1 Explanation: The strongest tea Iroh can brew uses only the last ingredient with strength 4.
+
+2  
+Example 2 Explanation: The strongest tea Iroh can brew uses both ingredients: -2 and -1 (-2 * -1 is 2).
 """
